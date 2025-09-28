@@ -5,6 +5,10 @@
   "author": "swaroop v",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts",
+    "schema": "./prisma/schema.prisma"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -18,7 +22,15 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky"
+    "prepare": "husky",
+    "migration:new": "npx prisma migrate dev --name",
+    "migration:dev": "npx prisma migrate dev",
+    "migration:dev-no-seeds": "npx prisma migrate dev --skip-seed",
+    "migration:create": "npx prisma migrate dev --create-only",
+    "migration:prod": "npx prisma migrate deploy",
+    "migration:reset": "npx prisma migrate reset",
+    "migration:reset-no-seed": "npx prisma migrate reset --skip-seed",
+    "seed": "npx prisma db seed"
   },
   "lint-staged": {
     "*.{ts,js}": [
@@ -33,6 +45,7 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@prisma/client": "^6.16.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -54,6 +67,7 @@
     "jest": "^30.0.0",
     "lint-staged": "^16.1.6",
     "prettier": "^3.4.2",
+    "prisma": "^6.16.2",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
