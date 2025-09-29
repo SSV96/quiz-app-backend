@@ -8,3 +8,4 @@ docker-compose*
 *.md
 test
 coverage
+.husky
