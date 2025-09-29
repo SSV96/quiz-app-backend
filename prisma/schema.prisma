@@ -6,3 +6,32 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Quiz {
+  id          String    @id @default(uuid())
+  title       String
+  published   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  blocks QuizBlock[]
+}
+
+model QuizBlock {
+  id         String    @id @default(uuid())
+  quizId     String
+  quiz       Quiz      @relation(fields: [quizId], references: [id])
+  order      Int
+  blockType  BlockType
+  properties Json
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum BlockType {
+  HEADING
+  QUESTION
+  BUTTON
+  FOOTER
+}
