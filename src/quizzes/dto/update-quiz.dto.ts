@@ -3,7 +3,7 @@ import { UpdateQuizBlockDto } from './update-quiz-block.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateQuizDto {
-   @ApiProperty()
+  @ApiProperty()
   @IsOptional()
   @IsString()
   title?: string;

@@ -1,4 +1,4 @@
-import { QuizBlockResponse } from "./quiz-block";
+import { type QuizBlockResponse } from './quiz-block';
 
 export class QuizResponse {
   id: string;
