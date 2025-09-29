@@ -1,4 +1,3 @@
-
 FROM node:22.18.0-alpine AS builder
 
 WORKDIR /app
@@ -7,9 +6,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-
 RUN npm run build
-
 
 FROM node:22.18.0-alpine AS runner
 
@@ -23,10 +20,13 @@ RUN npm ci --omit=dev --ignore-scripts
 
 COPY --from=builder /app/dist ./dist
 
+COPY --from=builder /app/prisma ./prisma
+
+RUN npx prisma generate
+
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
-EXPOSE 3001
+EXPOSE 3000
 
-# Start the NestJS app
-CMD ["node", "dist/main.js"]
+CMD npx prisma migrate deploy && node dist/main.js
