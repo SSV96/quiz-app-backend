@@ -25,6 +25,25 @@ export default tseslint.config(
     },
   },
   {
-    rules: {},
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/consistent-type-imports': [
+        'warn',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+
+      eqeqeq: ['error', 'always'],
+      'no-console': 'warn',
+      curly: ['error', 'all'],
+      'no-var': 'error',
+      'prefer-const': 'warn',
+
+      'no-multiple-empty-lines': ['warn', { max: 1 }],
+      quotes: ['warn', 'single', { avoidEscape: true }],
+      semi: ['error', 'always'],
+    },
   },
 );
