@@ -52,4 +52,4 @@ export interface ButtonBlock {
   properties: IButtonBlockProperties;
 }
 
-export type TQuizBlock = QuestionBlock | TextBlock | ButtonBlock ;
+export type TQuizBlock = QuestionBlock | TextBlock | ButtonBlock;
