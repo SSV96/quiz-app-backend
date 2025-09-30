@@ -9,3 +9,5 @@ docker-compose*
 test
 coverage
 .husky
+# TypeScript incremental build info
+*.tsbuildinfo

@@ -38,7 +38,7 @@ const realQuestions = [
   },
 ];
 
-function generateQuestionBlock(q: (typeof realQuestions)[number]) {
+function generateQuestionBlock(q: (typeof realQuestions)[number], order: number) {
   const options =
     q.kind !== 'TEXT'
       ? (q.options?.map((opt) => ({ id: crypto.randomUUID(), text: opt.text })) ?? [])
@@ -51,6 +51,7 @@ function generateQuestionBlock(q: (typeof realQuestions)[number]) {
 
   return {
     type: BlockType.QUESTION,
+    order, // <-- add order field
     properties: {
       title: q.title,
       kind: q.kind,
@@ -61,26 +62,37 @@ function generateQuestionBlock(q: (typeof realQuestions)[number]) {
 }
 
 function generateQuiz(title: string, questions: (typeof realQuestions)[number][]) {
+  let orderCounter = 1;
+
+  const blocks = [
+    {
+      type: BlockType.HEADING,
+      order: orderCounter++,
+      properties: { text: `${title} - Welcome!` },
+    },
+    ...questions.map((q) => generateQuestionBlock(q, orderCounter++)),
+    {
+      type: BlockType.BUTTON,
+      order: orderCounter++,
+      properties: { nextLabel: 'Next', previousLabel: 'Back', submitLabel: 'Submit' },
+    },
+    {
+      type: BlockType.FOOTER,
+      order: orderCounter++,
+      properties: { text: 'Thanks for participating!' },
+    },
+  ];
+
   return {
     title,
     published: true,
     publishedAt: new Date(),
-    blocks: {
-      create: [
-        { type: BlockType.HEADING, properties: { text: `${title} - Welcome!` } },
-        ...questions.map(generateQuestionBlock),
-        {
-          type: BlockType.BUTTON,
-          properties: { nextLabel: 'Next', previousLabel: 'Back', submitLabel: 'Submit' },
-        },
-        { type: BlockType.FOOTER, properties: { text: 'Thanks for participating!' } },
-      ],
-    },
+    blocks: { create: blocks },
   };
 }
 
 async function main() {
-  console.log(' Seeding 2 quizzes with real questions...');
+  console.log('Seeding 2 quizzes with real questions...');
   await prisma.quiz.create({
     data: generateQuiz('General Knowledge Quiz', realQuestions.slice(0, 3)),
   });
@@ -89,7 +101,7 @@ async function main() {
     data: generateQuiz('Mixed Topics Quiz', realQuestions.slice(3)),
   });
 
-  console.log(' Done seeding quizzes!');
+  console.log('Done seeding quizzes!');
 }
 
 main()

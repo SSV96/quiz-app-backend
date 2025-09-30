@@ -40,7 +40,7 @@ export class QuizzesService {
     const quiz = await this.prisma.quiz.findUnique({
       where: { id },
       include: {
-        blocks: { orderBy: { updatedAt: 'asc' } },
+        blocks: { orderBy: { order: 'asc' } },
       },
     });
     if (!quiz) {
@@ -51,7 +51,6 @@ export class QuizzesService {
 
   async update(id: string, updateQuizDto: UpdateQuizDto) {
     const { blocks, title } = updateQuizDto;
-    console.log(blocks);
 
     try {
       if (!blocks) {
@@ -88,6 +87,7 @@ export class QuizzesService {
             where: { id: block.id },
             data: {
               type: block.type,
+              order: block.order,
               properties: block.properties as any,
             },
           }),
@@ -98,6 +98,7 @@ export class QuizzesService {
             data: {
               quizId: id,
               type: block.type!,
+              order: block.order,
               properties: block.properties as any,
             },
           }),

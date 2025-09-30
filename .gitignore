@@ -2,3 +2,5 @@
 /dist
 /generated/prisma
 /.env
+# TypeScript incremental build info
+*.tsbuildinfo
