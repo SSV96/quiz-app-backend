@@ -6,7 +6,7 @@ import { UpdateQuizDto } from './dto/update-quiz.dto';
 @Controller('quizzes')
 export class QuizzesController {
   constructor(private readonly quizzesService: QuizzesService) {}
-  
+
   @Post()
   create(@Body() createQuizDto: CreateQuizDto) {
     return this.quizzesService.create(createQuizDto);
@@ -33,7 +33,7 @@ export class QuizzesController {
   }
 
   @Delete(':id')
-  delteQuiz(@Param('id') id:string){
-   return this.quizzesService.deleteQuiz(id);
+  delteQuiz(@Param('id') id: string) {
+    return this.quizzesService.deleteQuiz(id);
   }
 }

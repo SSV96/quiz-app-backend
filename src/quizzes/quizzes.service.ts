@@ -82,7 +82,6 @@ export class QuizzesService {
       );
 
       const queries = [
-        // ...toDelete.map((id) => this.prisma.quizBlock.delete({ where: { id } })),
         this.prisma.quizBlock.deleteMany({ where: { id: { in: toDelete } } }),
         ...toUpdate.map((block) =>
           this.prisma.quizBlock.update({

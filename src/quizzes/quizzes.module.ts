@@ -4,7 +4,7 @@ import { QuizzesController } from './quizzes.controller';
 import { PrismaModule } from 'src/common/prisma/prisma.module';
 
 @Module({
-  imports:[PrismaModule],
+  imports: [PrismaModule],
   controllers: [QuizzesController],
   providers: [QuizzesService],
 })
