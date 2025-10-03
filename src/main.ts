@@ -21,5 +21,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentFactory);
 
   await app.listen(process.env.PORT ?? 3002);
+  console.log('Application is Deployed AT ', await app.getUrl());
 }
 bootstrap();
